@@ -1,0 +1,34 @@
+#!/bin/bash
+
+set -eu
+set -o pipefail
+shopt -s lastpipe
+
+SERVER="$1"
+NODE="$2"
+
+if ! RESULT="$(curl -sL "http://${SERVER}/nodes.json" | jq -r "map(select(.name == \"${NODE,,}\"))[0] | [.status, \"|\", .time, \"|\", if .last then \"yes\" else \"no\" end] | add")" || [ -z "$RESULT" ]; then
+  echo "UNKNOWN: Failed fetching backup status"
+  exit 3
+fi
+
+if [ "$RESULT" = "||no" ]; then
+  echo "UNKNOWN: Node not configured for backup"
+  exit 3
+fi
+
+STATUS="${RESULT%%|*}"
+TIME="${RESULT#*|}"
+LAST="${TIME#*|}"
+TIME="${TIME%|*}"
+
+if [ "$STATUS" = "success" ]; then
+  echo "OK: last backup at ${TIME} was successful"
+  exit 0
+elif [ "$LAST" = "no" ]; then
+  echo "WARNING: No backup tries since startup"
+  exit 1
+else
+  echo "CRITICAL: status=${STATUS} time=${TIME}"
+  exit 2
+fi
