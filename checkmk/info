@@ -1,0 +1,12 @@
+{'author': 'Jan-Philipp Litza <jpl@plutex.de>',
+ 'description': 'Plugin to gather network device backup status from Oxidized..',
+ 'download_url': 'https://github.com/PLUTEX/check-oxidized/tree/master/checkmk',
+ 'files': {'agent_based': ['oxidized.py'],
+           'agents': ['plugins/oxidized']},
+ 'name': 'oxidized',
+ 'num_files': 2,
+ 'title': 'Oxidized device backup status',
+ 'version': '1.0',
+ 'version.min_required': '2.0.0',
+ 'version.packaged': '2.0.0p22',
+ 'version.usable_until': None}
