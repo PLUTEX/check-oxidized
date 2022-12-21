@@ -36,7 +36,7 @@ def check_oxidized(section):
         yield Result(state=State.CRIT, summary=f"status={status}, time={time}")
     else:
         time_parsed = datetime.strptime(time, "%Y-%m-%d %H:%M:%S %Z")
-        if time_parsed - datetime.now() >= THRESHOLD:
+        if datetime.now() - time_parsed >= THRESHOLD:
             yield Result(state=State.WARN, summary=f"Backup older than {THRESHOLD} (last run: {time})")
         else:
             yield Result(state=State.OK, summary=f"Last backup at {time} was successful")
