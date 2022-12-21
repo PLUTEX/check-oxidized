@@ -5,7 +5,7 @@
  'name': 'oxidized',
  'num_files': 2,
  'title': 'Oxidized device backup status',
- 'version': '1.1',
+ 'version': '1.0.1',
  'version.min_required': '2.0.0',
  'version.packaged': '2.1.0p16',
  'version.usable_until': None}
